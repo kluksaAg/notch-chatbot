@@ -1,0 +1,14 @@
+logging:
+  level:
+    root: ERROR
+    org.springframework.ai: trace
+
+spring:
+  application:
+    name: notch-chatbot
+  ai:
+    openai:
+          api-key: ${API_KEY}
+
+server:
+  port: 5050

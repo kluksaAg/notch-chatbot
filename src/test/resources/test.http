@@ -1,0 +1,31 @@
+### Who are you?
+POST localhost:5050/employee/chat/1
+content-type: application/json
+
+{
+  "text": "Who are you?"
+}
+
+### What did I ask you in my last question?
+POST localhost:5050/employee/chat/1
+content-type: application/json
+
+{
+  "text": "What did I ask you in my last question?"
+}
+
+### Did I talk to you already?
+POST localhost:5050/employee/chat/1
+content-type: application/json
+
+{
+  "text": "Did I talk to you already?"
+}
+
+### Did I talk to you already?
+POST localhost:5050/employee/chat/2
+content-type: application/json
+
+{
+  "text": "Did I talk to you already?"
+}
