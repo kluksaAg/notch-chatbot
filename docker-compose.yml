@@ -1,0 +1,24 @@
+services:
+  db:
+    image: pgvector/pgvector:pg17 # PostgreSQL with pgvector support
+    container_name: pgvector
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: example_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./data/:/var/lib/postgresql/data
+    networks:
+      default:
+        aliases:
+          - pg
+
+volumes:
+    n8n_data:
+      external: true
+
+networks:
+  default:

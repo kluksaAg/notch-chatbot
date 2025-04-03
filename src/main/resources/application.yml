@@ -9,6 +9,15 @@ spring:
   ai:
     openai:
           api-key: ${API_KEY}
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 1536
+  datasource:
+    url: jdbc:postgresql://localhost:5432/example_db
+    username: postgres
+    password: password
 
 server:
   port: 5050
