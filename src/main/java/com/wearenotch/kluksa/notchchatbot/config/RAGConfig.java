@@ -6,10 +6,15 @@ import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.rag.generation.augmentation.ContextualQueryAugmenter;
 import org.springframework.ai.rag.preretrieval.query.expansion.MultiQueryExpander;
 import org.springframework.ai.rag.preretrieval.query.expansion.QueryExpander;
+import org.springframework.ai.rag.preretrieval.query.transformation.CompressionQueryTransformer;
+import org.springframework.ai.rag.preretrieval.query.transformation.QueryTransformer;
+import org.springframework.ai.rag.preretrieval.query.transformation.RewriteQueryTransformer;
 import org.springframework.ai.rag.retrieval.search.VectorStoreDocumentRetriever;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
 public class RAGConfig {
@@ -29,6 +34,7 @@ public class RAGConfig {
                 .vectorStore(vectorStore)
                 .build())
             .queryExpander(queryExpander())
+            .queryTransformers(queryTransformers())
             .queryAugmenter(ContextualQueryAugmenter.builder()
                 .allowEmptyContext(true)
                 .build())
@@ -59,5 +65,41 @@ public class RAGConfig {
             .promptTemplate(new PromptTemplate(templateString))
             .numberOfQueries(4)
             .build();
+    }
+
+    private List<QueryTransformer> queryTransformers() {
+        final PromptTemplate rewritePrompt = new PromptTemplate("""
+            Given a user query, rewrite it to provide better results when querying a {target}.
+            Remove any irrelevant information, and ensure the query is concise and specific.
+            
+            Original query:
+            {query}
+            
+            Rewritten query:
+        """);
+
+        final PromptTemplate compressionPrompt = new PromptTemplate("""
+            Given the following conversation history and a follow-up query, your task is to synthesize
+            a concise, standalone query that incorporates the context from the history.
+            Ensure the standalone query is clear, specific, and maintains the user's intent.
+            
+            Conversation history:
+            {history}
+            
+            Follow-up query:
+            {query}
+            
+            Standalone query:
+            
+            """);
+        final CompressionQueryTransformer compressionQueryTransformer = CompressionQueryTransformer.builder()
+            .chatClientBuilder(chatClientBuilder)
+            .promptTemplate(compressionPrompt)
+            .build();
+        final RewriteQueryTransformer rewriteQueryTransformer = RewriteQueryTransformer.builder()
+            .chatClientBuilder(chatClientBuilder)
+            .promptTemplate(rewritePrompt)
+            .build();
+        return List.of(compressionQueryTransformer, rewriteQueryTransformer);
     }
 }
