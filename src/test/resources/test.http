@@ -29,3 +29,19 @@ content-type: application/json
 {
   "text": "Did I talk to you already?"
 }
+
+### What can you tell me about notch referral program?
+POST localhost:5050/employee/chat/1
+content-type: application/json
+
+{
+  "text": "What can you tell me about notch referral program?"
+}
+
+### Sto znas o ponudi racunala?
+POST localhost:5050/employee/chat/1
+content-type: application/json
+
+{
+  "text": "Sto znas o ponudi racunala?"
+}
