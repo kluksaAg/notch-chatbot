@@ -54,10 +54,10 @@ content-type: application/json
   "text": "What were the earnings for 2021?"
 }
 
-### "What can you tell me about notch referral program and company earnings for 2021?
+### "What can you tell me about notch referral program and what were the earnings for 2021?
 POST localhost:5050/employee/chat/1
 content-type: application/json
 
 {
-  "text": "What can you tell me about notch referral program and company earnings for 2021?"
+  "text": "What can you tell me about notch referral program and what were the earnings for 2021?"
 }

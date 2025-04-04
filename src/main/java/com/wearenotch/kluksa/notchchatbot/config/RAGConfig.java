@@ -70,7 +70,7 @@ public class RAGConfig {
     private List<QueryTransformer> queryTransformers() {
         final PromptTemplate rewritePrompt = new PromptTemplate("""
             Given a user query, rewrite it to provide better results when querying a {target}.
-            Remove any irrelevant information, and ensure the query is concise and specific.
+            Remove any irrelevant information, and ensure the query is concise and specific. 
             
             Original query:
             {query}
@@ -78,28 +78,10 @@ public class RAGConfig {
             Rewritten query:
         """);
 
-        final PromptTemplate compressionPrompt = new PromptTemplate("""
-            Given the following conversation history and a follow-up query, your task is to synthesize
-            a concise, standalone query that incorporates the context from the history.
-            Ensure the standalone query is clear, specific, and maintains the user's intent.
-            
-            Conversation history:
-            {history}
-            
-            Follow-up query:
-            {query}
-            
-            Standalone query:
-            
-            """);
-        final CompressionQueryTransformer compressionQueryTransformer = CompressionQueryTransformer.builder()
-            .chatClientBuilder(chatClientBuilder)
-            .promptTemplate(compressionPrompt)
-            .build();
         final RewriteQueryTransformer rewriteQueryTransformer = RewriteQueryTransformer.builder()
             .chatClientBuilder(chatClientBuilder)
             .promptTemplate(rewritePrompt)
             .build();
-        return List.of(compressionQueryTransformer, rewriteQueryTransformer);
+        return List.of(rewriteQueryTransformer);
     }
 }

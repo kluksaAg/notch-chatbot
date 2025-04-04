@@ -21,7 +21,7 @@ public class ChatClientConfig {
         return chatClientBuilder
             .defaultAdvisors(
                 ragAdvisor,
-                MessageChatMemoryAdvisor.builder(chatMemory()).build(),
+//                MessageChatMemoryAdvisor.builder(chatMemory()).build(),
                 new SimpleLoggerAdvisor())
             .defaultSystem(systemPromptResource)
             .build();
