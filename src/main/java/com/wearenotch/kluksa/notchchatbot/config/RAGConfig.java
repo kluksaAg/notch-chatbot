@@ -1,38 +1,37 @@
 package com.wearenotch.kluksa.notchchatbot.config;
 
+import com.wearenotch.kluksa.notchchatbot.service.rag.MyRetriever;
+import com.wearenotch.kluksa.notchchatbot.service.rag.TextToSqlRetriever;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.RetrievalAugmentationAdvisor;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.rag.generation.augmentation.ContextualQueryAugmenter;
 import org.springframework.ai.rag.preretrieval.query.expansion.MultiQueryExpander;
 import org.springframework.ai.rag.preretrieval.query.expansion.QueryExpander;
-import org.springframework.ai.rag.preretrieval.query.transformation.CompressionQueryTransformer;
 import org.springframework.ai.rag.preretrieval.query.transformation.QueryTransformer;
 import org.springframework.ai.rag.preretrieval.query.transformation.RewriteQueryTransformer;
-import org.springframework.ai.rag.retrieval.search.VectorStoreDocumentRetriever;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 
 @Configuration
 public class RAGConfig {
-    private final VectorStore vectorStore;
     private final ChatClient.Builder chatClientBuilder;
+    private final MyRetriever myRetriever;
 
-    public RAGConfig(VectorStore vectorStore, ChatClient.Builder chatClientBuilder) {
-        this.vectorStore = vectorStore;
+    public RAGConfig(ChatClient.Builder chatClientBuilder, MyRetriever myRetriever) {
         this.chatClientBuilder = chatClientBuilder;
+        this.myRetriever = myRetriever;
     }
 
-    @Bean
+    @Primary
+    @Bean(name = "vectorStoreAdviser")
     public RetrievalAugmentationAdvisor getAdvisor() {
         return RetrievalAugmentationAdvisor.builder()
-            .documentRetriever(VectorStoreDocumentRetriever.builder()
-                .similarityThreshold(0.50)
-                .vectorStore(vectorStore)
-                .build())
+            .documentRetriever(myRetriever)
             .queryExpander(queryExpander())
             .queryTransformers(queryTransformers())
             .queryAugmenter(ContextualQueryAugmenter.builder()

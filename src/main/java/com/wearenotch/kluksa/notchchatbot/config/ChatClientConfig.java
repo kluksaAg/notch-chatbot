@@ -1,11 +1,11 @@
 package com.wearenotch.kluksa.notchchatbot.config;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.RetrievalAugmentationAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ public class ChatClientConfig {
     @Bean
     public ChatClient chatClient(@Value("classpath:/prompts/system-prompt.st") Resource systemPromptResource,
                                  ChatClient.Builder chatClientBuilder,
-                                 RetrievalAugmentationAdvisor ragAdvisor) {
+                                 @Qualifier("vectorStoreAdviser") RetrievalAugmentationAdvisor ragAdvisor) {
         return chatClientBuilder
             .defaultAdvisors(
                 ragAdvisor,

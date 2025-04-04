@@ -61,3 +61,64 @@ content-type: application/json
 {
   "text": "What can you tell me about notch referral program and what were the earnings for 2021?"
 }
+
+### What is Pero salary?
+POST localhost:5050/employee/chat/1
+content-type: application/json
+
+{
+  "text": "What is Pero salary?"
+}
+
+### What employees are younger than 63 years?
+POST localhost:5050/employee/chat/1
+content-type: application/json
+
+{
+  "text": "What employees are younger than 63 years?"
+}
+
+### What employees are younger than 30 years?
+POST localhost:5050/employee/chat/1
+content-type: application/json
+
+{
+  "text": "What employees are younger than 30 years? Explain the answer."
+}
+
+### Who is the youngest employee and how much does he earn per month
+POST localhost:5050/employee/chat/1
+content-type: application/json
+
+{
+  "text": "Who is the youngest employee and how much does he earn per month?"
+}
+
+### If Pero brings him to our company, how much bonus will Pero receive?
+POST localhost:5050/employee/chat/1
+content-type: application/json
+
+{
+  "text": "Jakov is mid level software engineer working in another company. If Pero brings him to our company, how much bonus will Pero receive?"
+}
+
+### 8
+POST localhost:5050/employee/chat/1
+content-type: application/json
+
+{
+  "text": "If Pero brings senior engineer to our company, how much bonus will he get and how much is Pero salary? Please add the amount for the bonus and salary."
+
+}
+
+
+
+
+
+### Who is the oldest employee and how old is he?
+POST localhost:5050/employee/chat/1
+content-type: application/json
+
+{
+  "text": "Who is the oldest employee and how old is he? Please explain in detail how did you calculate his age."
+}
