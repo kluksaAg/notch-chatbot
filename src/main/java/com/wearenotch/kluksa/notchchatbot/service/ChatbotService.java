@@ -1,5 +1,6 @@
 package com.wearenotch.kluksa.notchchatbot.service;
 
+import com.wearenotch.kluksa.notchchatbot.service.rag.CurrentDateTool;
 import com.wearenotch.kluksa.notchchatbot.service.rag.RevenueTool;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.model.function.FunctionCallback;
@@ -29,7 +30,11 @@ public class ChatbotService {
                 .function("getEarningsForYear", new RevenueTool())
                 .description("Get the earnings for a given year")
                 .inputType(RevenueTool.Request.class)
-                .build())
+                .build(),
+                FunctionCallback.builder()
+                    .function("getDate", new CurrentDateTool())
+                    .description("Get current date")
+                    .build())
             .call()
             .content();
     }

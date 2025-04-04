@@ -112,13 +112,19 @@ content-type: application/json
 }
 
 
-
-
-
 ### Who is the oldest employee and how old is he?
 POST localhost:5050/employee/chat/1
 content-type: application/json
 
 {
   "text": "Who is the oldest employee and how old is he? Please explain in detail how did you calculate his age."
+}
+
+
+###
+POST localhost:5050/employee/chat/1
+content-type: application/json
+
+{
+  "text": "Given the today year, and company revenue for this 2222,  Pero salary and bonus for bringing senior engineer to our company. Please sum all numbers provided."
 }
