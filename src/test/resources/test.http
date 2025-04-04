@@ -62,6 +62,14 @@ content-type: application/json
   "text": "What can you tell me about notch referral program and what were the earnings for 2021?"
 }
 
+### Što novi zaposlenik može dobiti?
+POST localhost:5050/employee/chat/1
+content-type: application/json
+
+{
+  "text": "Što novi zaposlenik može dobiti?"
+}
+
 ### What is Pero salary?
 POST localhost:5050/employee/chat/1
 content-type: application/json
@@ -102,7 +110,7 @@ content-type: application/json
   "text": "Jakov is mid level software engineer working in another company. If Pero brings him to our company, how much bonus will Pero receive?"
 }
 
-### 8
+###If Pero brings senior engineer to our company, how much bonus will he get and how much is Pero salary? Please add the amount for the bonus and salary.
 POST localhost:5050/employee/chat/1
 content-type: application/json
 
@@ -126,5 +134,5 @@ POST localhost:5050/employee/chat/1
 content-type: application/json
 
 {
-  "text": "Given the today year, and company revenue for this 2222,  Pero salary and bonus for bringing senior engineer to our company. Please sum all numbers provided."
+  "text": "Given the today year, and company revenue for 2222,  Pero salary and bonus for bringing senior engineer to our company. Please sum all numbers provided."
 }

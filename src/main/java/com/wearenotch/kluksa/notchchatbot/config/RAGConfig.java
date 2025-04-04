@@ -1,7 +1,6 @@
 package com.wearenotch.kluksa.notchchatbot.config;
 
 import com.wearenotch.kluksa.notchchatbot.service.rag.MyRetriever;
-import com.wearenotch.kluksa.notchchatbot.service.rag.TextToSqlRetriever;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.RetrievalAugmentationAdvisor;
 import org.springframework.ai.chat.prompt.PromptTemplate;
@@ -10,7 +9,7 @@ import org.springframework.ai.rag.preretrieval.query.expansion.MultiQueryExpande
 import org.springframework.ai.rag.preretrieval.query.expansion.QueryExpander;
 import org.springframework.ai.rag.preretrieval.query.transformation.QueryTransformer;
 import org.springframework.ai.rag.preretrieval.query.transformation.RewriteQueryTransformer;
-import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.ai.rag.preretrieval.query.transformation.TranslationQueryTransformer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -77,10 +76,15 @@ public class RAGConfig {
             Rewritten query:
         """);
 
+        final TranslationQueryTransformer translationQueryTransformer = TranslationQueryTransformer.builder()
+            .chatClientBuilder(chatClientBuilder)
+            .targetLanguage("english")
+            .build();
+
         final RewriteQueryTransformer rewriteQueryTransformer = RewriteQueryTransformer.builder()
             .chatClientBuilder(chatClientBuilder)
             .promptTemplate(rewritePrompt)
             .build();
-        return List.of(rewriteQueryTransformer);
+        return List.of(rewriteQueryTransformer, translationQueryTransformer);
     }
 }
